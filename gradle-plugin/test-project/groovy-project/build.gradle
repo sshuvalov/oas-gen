@@ -3,7 +3,7 @@ import io.github.fomin.oasgen.gradle.java.*
 import io.github.fomin.oasgen.gradle.typescript.*
 
 plugins {
-    id "io.github.fomin.oas-gen" version "0.1.14-SNAPSHOT"
+    id "io.github.fomin.oas-gen" version "0.2.2-SNAPSHOT"
     id "java"
 }
 
@@ -17,7 +17,7 @@ dependencyLocking {
     lockMode.set(LockMode.STRICT)
 }
 
-def oasGenVersion = "0.1.14-SNAPSHOT"
+def oasGenVersion = "0.2.2-SNAPSHOT"
 
 oasGen {
     generate("test1") {
@@ -47,6 +47,15 @@ oasGen {
                 new SingleOutput(java.sourceSets.named("main")),
                 [],
                 ["io.github.fomin.oas-gen:oas-gen-java-reactor-netty-runtime:$oasGenVersion".toString()],
+        )
+    }
+    generate("test4") {
+        source = new DirectorySource(file("../../../test-schemas/src/main/resources/openapi"))
+        schemaPath = "simple.yaml"
+        generator = BuiltinJavaGenerators.javaDestructionTests(
+                new SingleNamespace("namespace"),
+                new SingleOutput(java.sourceSets.named("test")),
+                []
         )
     }
 }

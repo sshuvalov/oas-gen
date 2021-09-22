@@ -55,3 +55,16 @@ fun javaSpringWebServer(
     converterIds = converterIds,
     apiDependencies = listOf("io.github.fomin.oas-gen:oas-gen-java-spring-web-runtime:$oasGenVersion")
 )
+
+fun javaDestructionTests(
+    namespaceConfiguration: NamespaceConfiguration,
+    outputConfiguration: OutputConfiguration,
+    converterIds: List<String> = emptyList(),
+) = JavaGenerator(
+    generatorId = "java-destruction-test",
+    generatorDependencies = listOf("io.github.fomin.oas-gen:oas-gen-java-destruction-test-generator:$oasGenVersion"),
+    namespaceConfiguration = namespaceConfiguration,
+    outputConfiguration = outputConfiguration,
+    converterIds = converterIds,
+    apiDependencies = listOf("io.github.fomin.oas-gen:oas-gen-java-destruction-test-runtime:$oasGenVersion")
+)

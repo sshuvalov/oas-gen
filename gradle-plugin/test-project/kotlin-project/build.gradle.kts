@@ -3,7 +3,7 @@ import io.github.fomin.oasgen.gradle.java.*
 import io.github.fomin.oasgen.gradle.typescript.*
 
 plugins {
-    id("io.github.fomin.oas-gen") version "0.1.14-SNAPSHOT"
+    id("io.github.fomin.oas-gen") version "0.2.2-SNAPSHOT"
     java
     kotlin("jvm") version "1.5.31"
 }
@@ -18,7 +18,7 @@ dependencyLocking {
     lockMode.set(LockMode.STRICT)
 }
 
-val oasGenVersion = "0.1.14-SNAPSHOT"
+val oasGenVersion = "0.2.2-SNAPSHOT"
 
 oasGen {
     generate("test1") {
@@ -26,7 +26,7 @@ oasGen {
         schemaPath = "simple.yaml"
         generator = javaReactorNettyClient(
             namespaceConfiguration = SingleNamespace("namespace"),
-            outputConfiguration = SingleOutput(java.sourceSets.main),
+            outputConfiguration = SingleOutput(java.sourceSets.main)
         )
     }
     generate("test2") {
@@ -45,6 +45,14 @@ oasGen {
             outputConfiguration = SingleOutput(java.sourceSets.main),
             generatorDependencies = listOf("io.github.fomin.oas-gen:oas-gen-java-reactor-netty-generator:$oasGenVersion"),
             apiDependencies = listOf("io.github.fomin.oas-gen:oas-gen-java-reactor-netty-runtime:$oasGenVersion"),
+        )
+    }
+    generate("test4") {
+        source = DirectorySource(file("../../../test-schemas/src/main/resources/openapi"))
+        schemaPath = "simple.yaml"
+        generator = javaDestructionTests(
+            namespaceConfiguration = SingleNamespace("namespace"),
+            outputConfiguration = SingleOutput(java.sourceSets.test)
         )
     }
 }
